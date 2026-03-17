@@ -2,6 +2,8 @@
 // The Riser — server.js
 // Team: Aditya Das (Leader), Abhishek Raj, Alok Kumar
 // ============================================================
+const cors = require('cors');
+app.use(cors()); // Ye line sabhi domains ko access de degi
 
 require('dotenv').config();
 const express = require('express');
