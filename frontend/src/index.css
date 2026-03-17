@@ -1,0 +1,400 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ─────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+:root {
+  --cyber-cyan:   #00f5ff;
+  --cyber-purple: #bf00ff;
+  --cyber-yellow: #f5ff00;
+  --cyber-green:  #00ff88;
+  --cyber-red:    #ff2d55;
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #e8e8e8;
+  font-family: 'Syne', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #00f5ff; border-radius: 0; }
+
+/* ── Selection ────────────────────────────────────────────── */
+::selection { background: #00f5ff; color: #0a0a0a; }
+
+/* ── Hide default cursor site-wide (CustomCursor replaces it) */
+* { cursor: none !important; }
+
+/* ── Matrix / Futuristic global effects ───────────────────── */
+
+/* Neon text glow — add class="neon-cyan" to any element */
+.neon-cyan {
+  text-shadow:
+    0 0 7px  #00f5ff,
+    0 0 14px #00f5ff,
+    0 0 30px #00f5ff88;
+}
+.neon-purple {
+  text-shadow:
+    0 0 7px  #bf00ff,
+    0 0 14px #bf00ff,
+    0 0 30px #bf00ff88;
+}
+.neon-yellow {
+  text-shadow:
+    0 0 7px  #f5ff00,
+    0 0 14px #f5ff00,
+    0 0 30px #f5ff0088;
+}
+
+/* Neon border pulse on cards */
+.neon-border-pulse {
+  animation: neonPulse 2.5s ease-in-out infinite;
+}
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 4px 4px 0 #00f5ff, 0 0 10px #00f5ff44; }
+  50%       { box-shadow: 4px 4px 0 #00f5ff, 0 0 24px #00f5ffaa; }
+}
+
+/* Holographic shimmer — add class="holo-shimmer" */
+.holo-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.holo-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(0,245,255,0.04) 30%,
+    rgba(191,0,255,0.06) 50%,
+    rgba(0,245,255,0.04) 70%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: holoShimmer 3s linear infinite;
+  pointer-events: none;
+}
+@keyframes holoShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Flicker-in animation for page elements */
+@keyframes flickerIn {
+  0%   { opacity: 0; }
+  10%  { opacity: 0.8; }
+  12%  { opacity: 0.1; }
+  20%  { opacity: 0.9; }
+  22%  { opacity: 0.3; }
+  30%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+.flicker-in {
+  animation: flickerIn 0.6s ease-out forwards;
+}
+
+/* Typing cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor-blink::after {
+  content: '█';
+  font-size: 0.85em;
+  color: #00f5ff;
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+/* Scan line sweep (subtle horizontal line moving down) */
+@keyframes scan {
+  0%   { top: -2px; }
+  100% { top: 100vh; }
+}
+.scanlines::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 245, 255, 0.08),
+    transparent
+  );
+  animation: scan 6s linear infinite;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* CRT flicker (very subtle, on body) */
+@keyframes crtFlicker {
+  0%   { opacity: 1; }
+  97%  { opacity: 1; }
+  98%  { opacity: 0.97; }
+  99%  { opacity: 1; }
+  100% { opacity: 0.99; }
+}
+body {
+  animation: crtFlicker 8s linear infinite;
+}
+
+/* Glitch text — data-text attr required */
+.glitch-text {
+  position: relative;
+}
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.glitch-text::before {
+  color: #00f5ff;
+  animation: glitchTop 3s steps(2) infinite;
+  clip-path: inset(0 0 60% 0);
+  opacity: 0.8;
+}
+.glitch-text::after {
+  color: #bf00ff;
+  animation: glitchBot 3s steps(2) infinite reverse;
+  clip-path: inset(60% 0 0 0);
+  opacity: 0.8;
+}
+@keyframes glitchTop {
+  0%  { transform: translate(0); }
+  20% { transform: translate(-2px, -1px); }
+  40% { transform: translate(2px, 1px); }
+  60% { transform: translate(-1px, 0); }
+  80% { transform: translate(0, 2px); }
+  100%{ transform: translate(0); }
+}
+@keyframes glitchBot {
+  0%  { transform: translate(0); }
+  20% { transform: translate(2px, 1px); }
+  40% { transform: translate(-2px, -1px); }
+  60% { transform: translate(1px, 0); }
+  80% { transform: translate(0, -2px); }
+  100%{ transform: translate(0); }
+}
+
+/* Matrix container helper — wrap a section in this */
+.matrix-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Button hover — cyber flicker */
+.btn-cyber-cyan:hover,
+.btn-bidpulse:hover,
+.btn-cyber-red:hover {
+  animation: btnFlicker 0.15s steps(2) 1;
+}
+@keyframes btnFlicker {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* Loading bar — futuristic progress */
+.cyber-progress {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    #00f5ff,
+    #bf00ff,
+    #00f5ff,
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: progressSlide 1.5s linear infinite;
+}
+@keyframes progressSlide {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* ── Typography ───────────────────────────────────────────── */
+.font-display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
+.font-mono    { font-family: 'DM Mono', monospace; }
+
+/* ── Neo-brutalist components ─────────────────────────────── */
+@layer components {
+  .neo-card {
+    @apply bg-cyber-card border-2 border-cyber-border relative;
+  }
+
+  .neo-card-cyan {
+    @apply bg-cyber-card border-2 border-cyber-cyan;
+    box-shadow: 4px 4px 0 #00f5ff;
+  }
+
+  .neo-card-purple {
+    @apply bg-cyber-card border-2 border-cyber-purple;
+    box-shadow: 4px 4px 0 #bf00ff;
+  }
+
+  .neo-card-yellow {
+    @apply bg-cyber-card border-2 border-cyber-yellow;
+    box-shadow: 4px 4px 0 #f5ff00;
+  }
+
+  /* Primary CTA button */
+  .btn-cyber-cyan {
+    @apply bg-cyber-cyan text-cyber-black font-ui font-bold border-2 border-cyber-cyan
+           px-6 py-3 transition-all duration-150 cursor-pointer select-none;
+    box-shadow: 4px 4px 0 rgba(0,245,255,0.4);
+    font-weight: 700;
+  }
+  .btn-cyber-cyan:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 rgba(0,245,255,0.6);
+  }
+  .btn-cyber-cyan:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 rgba(0,245,255,0.4);
+  }
+
+  /* Secondary button */
+  .btn-cyber-outline {
+    @apply bg-transparent text-cyber-cyan font-ui border-2 border-cyber-cyan
+           px-6 py-3 transition-all duration-150 cursor-pointer select-none;
+    font-weight: 600;
+  }
+  .btn-cyber-outline:hover {
+    @apply bg-cyber-cyan text-cyber-black;
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 rgba(0,245,255,0.4);
+  }
+
+  /* Danger button */
+  .btn-cyber-red {
+    @apply bg-cyber-red text-white font-ui border-2 border-cyber-red
+           px-6 py-3 transition-all duration-150 cursor-pointer select-none;
+    font-weight: 700;
+  }
+  .btn-cyber-red:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 #ff2d55;
+  }
+
+  /* Purple BidPulse button */
+  .btn-bidpulse {
+    @apply bg-cyber-purple text-white font-ui border-2 border-cyber-purple
+           px-6 py-3 transition-all duration-150 cursor-pointer select-none;
+    font-weight: 700;
+  }
+  .btn-bidpulse:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 #bf00ff;
+  }
+
+  /* Form inputs */
+  .neo-input {
+    @apply bg-cyber-dark border-2 border-cyber-border text-white font-mono
+           px-4 py-3 w-full outline-none transition-colors duration-150;
+    font-size: 14px;
+  }
+  .neo-input:focus {
+    border-color: #00f5ff;
+    box-shadow: 0 0 0 1px #00f5ff;
+  }
+  .neo-input::placeholder { color: #555; }
+
+  /* Label */
+  .neo-label {
+    @apply text-xs font-mono uppercase tracking-widest text-gray-400 block mb-1;
+  }
+
+  /* Badge */
+  .badge-active  { @apply bg-cyber-green text-cyber-black text-xs font-mono font-bold px-2 py-0.5; }
+  .badge-ended   { @apply bg-gray-600 text-gray-200 text-xs font-mono font-bold px-2 py-0.5; }
+  .badge-upcoming{ @apply bg-cyber-yellow text-cyber-black text-xs font-mono font-bold px-2 py-0.5; }
+  .badge-auto    { @apply bg-cyber-purple text-white text-xs font-mono font-bold px-2 py-0.5; }
+
+  /* Countdown timer */
+  .timer-urgent { @apply text-cyber-red animate-pulse-fast; }
+  .timer-normal { @apply text-cyber-cyan; }
+
+  /* Live pulse dot */
+  .live-dot {
+    @apply w-2 h-2 rounded-full bg-cyber-red inline-block;
+    animation: pulse 1s ease-in-out infinite;
+  }
+}
+
+/* ── Glitch text effect ───────────────────────────────────── */
+.glitch-text {
+  position: relative;
+}
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.glitch-text::before {
+  color: #00f5ff;
+  animation: glitch 0.3s steps(2) infinite;
+  clip-path: inset(0 0 50% 0);
+}
+.glitch-text::after {
+  color: #bf00ff;
+  animation: glitch 0.3s steps(2) infinite reverse;
+  clip-path: inset(50% 0 0 0);
+}
+
+/* ── Scan line overlay ────────────────────────────────────── */
+.scanlines::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: rgba(0, 245, 255, 0.05);
+  animation: scan 4s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Neon glow border animation ───────────────────────────── */
+@keyframes border-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(0,245,255,0.3); }
+  50%       { box-shadow: 0 0 25px rgba(0,245,255,0.7); }
+}
+.glow-border-animated {
+  animation: border-glow 2s ease-in-out infinite;
+}
+
+/* ── Bid flash animation ──────────────────────────────────── */
+.bid-flash { animation: bidFlash 0.6s ease-out forwards; }
+
+/* ── Streak fire animation ────────────────────────────────── */
+@keyframes streakBounce {
+  0%   { transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(1.3) rotate(-5deg); }
+  50%  { transform: scale(1.1) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.streak-anim { animation: streakBounce 0.5s ease-out; }
+
+/* ── Fullscreen grid bg ───────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
